@@ -1,12 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
+//mediator class
 public class ChatServer {
     private static ChatServer instance;
     private List<User> registeredUsers;
 
     private ChatServer() {
         this.registeredUsers = new ArrayList<>();
+    }
+
+    public List<User> getUserList() {
+        return this.registeredUsers;
     }
 
     public static ChatServer getInstance() {
@@ -26,7 +31,7 @@ public class ChatServer {
 
     public void sendMessage(User sender, User recipient, String messageContent) {
         if (registeredUsers.contains(sender) && registeredUsers.contains(recipient)) {
-            recipient.receiveMessage(new Message(sender, new User[]{recipient}, messageContent));
+            recipient.receiveMessage(new Message(sender, new User[] { recipient }, messageContent));
         }
     }
 

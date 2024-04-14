@@ -14,7 +14,6 @@ public class Message {
 
     }
 
-
     public User getSender() {
         return this.sender;
     }
