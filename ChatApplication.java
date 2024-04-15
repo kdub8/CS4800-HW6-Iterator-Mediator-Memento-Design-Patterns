@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +21,7 @@ public class ChatApplication {
 
         // Block user2 by user1
         user1.blockUser(user2);
+        user3.blockUser(user4);
 
         user1.sendMessage(user2, "1. Hello, Bob, it's me, Alice!");
 
@@ -83,6 +86,34 @@ public class ChatApplication {
             System.out.println("Timestamp: " + msg.getTimestamp());
             System.out.println("Message content: " + msg.getContent());
             System.out.println();
+        }
+        ////////////////////////////////////////////////////////////////////////
+        System.out.println("------------------------TESTING ITERATORS------------------------");
+
+        //ChatHistory chatHistory = new ChatHistory();
+        // Demonstrate iterator for User's chat history
+        System.out.println("Iterating over User 1's chat history:");
+        Iterator<Message> userIterator = user1.iterator(user1);
+        while (userIterator.hasNext()) {
+            Message message = userIterator.next();
+            User[] recipients = message.getRecipients();
+            String recipient = recipients[0].getUsername();
+            System.out.println(message.getSender().getUsername() + " -> " +
+                    recipient + ": " +
+                    message.getContent());
+        }
+
+        // Demonstrate iterator for ChatHistory
+        System.out.println("\nIterating over User 4's ChatHistory:");
+        ChatHistory chatHistory = user4.getChatHistory();
+        Iterator<Message> chatHistoryIterator = chatHistory.iterator(user4);
+        while (chatHistoryIterator.hasNext()) {
+            Message message = chatHistoryIterator.next();
+            User[] recipients = message.getRecipients();
+            String recipient = recipients[0].getUsername();
+            System.out.println(message.getSender().getUsername() + " -> " +
+                    recipient + ": " +
+                    message.getContent());
         }
 
     }

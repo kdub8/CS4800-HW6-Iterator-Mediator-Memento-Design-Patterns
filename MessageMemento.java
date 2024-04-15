@@ -10,6 +10,7 @@ public class MessageMemento {
     public MessageMemento(Message message) {
         this.timestamp = message.getTimestamp();
         this.content = message.getContent();
+        this.message = message;
     }
 
     public MessageMemento(String state) {
@@ -29,13 +30,9 @@ public class MessageMemento {
 
     public void setState(Message message) {
         this.message = message;
-        setText(this.message);
     }
 
-    public void setText(Message message) {
-        this.timestamp = message.getTimestamp();
-        this.content = message.getContent();
-    }
+
 
     // public MessageMemento getState() {
     // return this;
@@ -54,4 +51,9 @@ public class MessageMemento {
         System.out.println("Timestamp: " + timestamp);
         System.out.println("Content: " + content);
     }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
 }

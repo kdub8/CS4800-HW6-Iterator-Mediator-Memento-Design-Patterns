@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,23 +39,25 @@ public class ChatHistory implements IterableByUser {
 
     @Override
     public Iterator<Message> iterator(User userToSearchWith) {
-        return new UserMessageIterator(userToSearchWith);
+        return new ChatHistoryIterator(this.messages, userToSearchWith);
     }
 
-    private class UserMessageIterator implements Iterator<Message> {
+     public static class ChatHistoryIterator implements Iterator<Message> {
+        private List<Message> messages;
         private int index;
         private User userToSearchWith;
-
-        public UserMessageIterator(User userToSearchWith) {
-            this.index = 0;
+        public ChatHistoryIterator(List<Message> messages, User userToSearchWith) {
+            this.messages = messages;
             this.userToSearchWith = userToSearchWith;
+            this.index = 0;
         }
 
         @Override
         public boolean hasNext() {
+            // Implement hasNext() to check if there are more messages for the specified user
             while (index < messages.size()) {
                 Message message = messages.get(index);
-                if (message.getSender().equals(userToSearchWith) || containsRecipient(message, userToSearchWith)) {
+                if (message.getSender().equals(userToSearchWith) ||  containsRecipient(message, userToSearchWith)) {
                     return true;
                 }
                 index++;
@@ -64,10 +67,13 @@ public class ChatHistory implements IterableByUser {
 
         @Override
         public Message next() {
-            if (hasNext()) {
+            // Implement next() to return the next message for the specified user
+            while (index < messages.size()) {
                 Message message = messages.get(index);
                 index++;
-                return message;
+                if (message.getSender().equals(userToSearchWith) || Arrays.asList(message.getRecipients()).contains(userToSearchWith)) {
+                    return message;
+                }
             }
             return null;
         }
