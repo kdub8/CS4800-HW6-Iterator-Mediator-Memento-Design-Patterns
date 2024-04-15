@@ -16,6 +16,16 @@ public class MessageMemento {
         this.state = state;
     }
 
+    public void restoreFromMemento(User sender, User recipient, Message message) {
+        Message lastMessage = sender.getChatHistory().getLastMessage();
+        ChatHistory senderHistory = sender.getChatHistory();
+        senderHistory.removeMessage(lastMessage);
+
+        lastMessage = recipient.getChatHistory().getLastMessage();
+        recipient.getChatHistory().removeMessage(lastMessage);
+
+    }
+
     public Message getState() {
         return message;
     }
@@ -31,12 +41,12 @@ public class MessageMemento {
     }
 
     // public MessageMemento getState() {
-    //     return this;
+    // return this;
     // }
 
     // public void setState(Message message) {
-    //     this.timestamp = message.getTimestamp();
-    //     this.content = message.getContent();
+    // this.timestamp = message.getTimestamp();
+    // this.content = message.getContent();
     // }
 
     public String getContent() {

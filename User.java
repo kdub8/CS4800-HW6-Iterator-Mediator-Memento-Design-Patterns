@@ -6,24 +6,26 @@ public class User implements IterableByUser {
     private String username;
     private ChatHistory chatHistory;
     private Map<User, Boolean> blockedUsers; // Map to store blocked users
-    private String text;
-    private MessageMemento memento = new MessageMemento(text);
-    private Message message;
+    //private String text;
+    private MessageMemento lastMessageMemento;
+    private Message lastSentMessage;
 
     public User(String username) {
         this.username = username;
         this.chatHistory = new ChatHistory();
         this.blockedUsers = new HashMap<>();
-        this.message = this.chatHistory.getLastMessage();
     }
 
     public void sendMessage(User recipient, String messageContent) {
         if (!recipient.blockedUsers.containsKey(this)) {
             Message message = new Message(this, new User[] { recipient }, messageContent);
             ChatServer.getInstance().sendMessage(this, recipient, messageContent);
-            MessageMemento memento = new MessageMemento(message);
-            memento.setState(message);
+            //MessageMemento memento = new MessageMemento(message);
+            // memento.setState(message);
+            //lastSentMessage = message;
+            //lastMessageMemento = message.createMemento();
             chatHistory.addMessage(message);
+            //recipient.chatHistory.addMessage(message);
 
         } else {
             System.out.println(recipient.getUsername() + " cannot receive any messages from " + this.username
@@ -32,15 +34,42 @@ public class User implements IterableByUser {
 
     }
 
-    public void save() {
-        this.memento.setState(this.chatHistory.getLastMessage());
-    }
+    // public void save() {
+    //     this.memento.setState(this.chatHistory.getLastMessage());
+    // }
 
     // public void undo() {
     // Message lastMessage = this.getChatHistory().getLastMessage();
     // chatHistory.removeLastMessage();
     // //chatHistory.addMessage(lastMessage);
     // }
+///////////////////////////
+//working undo method without memento pattern, still working on it though
+    public void undo() {
+       
+            Message lastMessage = this.chatHistory.getLastMessage();
+            //lastMessage.restoreFromMemento(lastMessageMemento);
+            this.chatHistory.removeMessage(lastMessage);
+            lastMessageMemento = null;
+            
+            
+
+            for (User recipient : lastMessage.getRecipients()) {
+                lastMessage = recipient.chatHistory.getLastMessage();
+                recipient.chatHistory.removeMessage(lastMessage);
+                MessageMemento memento = new MessageMemento(lastMessage);
+                memento.restoreFromMemento(this, recipient, lastMessage);
+            }
+
+      ///////////
+        // if (lastSentMessage != null) {
+        //     chatHistory.removeMessage(lastSentMessage);
+        //     for (User recipient : lastSentMessage.getRecipients()) {
+        //         recipient.chatHistory.removeMessage(lastSentMessage);
+        //     }
+        //     lastSentMessage = null;
+        // }
+    }
 
     // public void undo() {
     // Message lastMessage = chatHistory.getLastMessage();
@@ -50,19 +79,19 @@ public class User implements IterableByUser {
     // }
 
     // undo so remove last message then add new message
-    public void undo() {
-        User[] recipients;
+    // public void undo() {
+    //     User[] recipients;
 
-        recipients = this.chatHistory.getLastMessage().getRecipients();
+    //     recipients = this.chatHistory.getLastMessage().getRecipients();
         
 
-        for (int i = 0; i < recipients.length; i++) {
-            recipients[i].chatHistory.removeLastMessage();
-        }
-        this.chatHistory.removeLastMessage();
+    //     for (int i = 0; i < recipients.length; i++) {
+    //         recipients[i].chatHistory.removeLastMessage();
+    //     }
+    //     this.chatHistory.removeLastMessage();
 
-        //this.memento.getState().getContent();
-    }
+    //     //this.memento.getState().getContent();
+    // }
 
     // public void undo() {
     // this.message = this.chatHistory.getLastMessage();

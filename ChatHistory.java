@@ -13,6 +13,11 @@ public class ChatHistory implements IterableByUser {
         messages.add(message);
     }
 
+    public void removeMessage(Message message) {
+        messages.remove(message);
+    }
+
+
     // public Message getLastMessage() {
     //     return messages.get(messages.size() - 1);
     // }

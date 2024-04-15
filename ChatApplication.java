@@ -20,24 +20,26 @@ public class ChatApplication {
         // Block user2 by user1
         user1.blockUser(user2);
 
-        user1.sendMessage(user2, "Hello, Bob!");
-        user1.save();
-        user1.sendMessage(user4, "UNDO THIS MESSAGE");
+        user1.sendMessage(user2, "1. Hello, Bob!");
+
+        user1.sendMessage(user4, "2. UNDO THIS MESSAGE");
 
         // undo the last message from user1
         user1.undo();
+        
 
-        user2.sendMessage(user1, "Hi, Alice!");
-        user2.save();
-        user3.sendMessage(user1, "What's going on, Alice!");
-        user3.save();
+        user2.sendMessage(user1, "3. Hi, Alice!");
+    
+        
+        user3.sendMessage(user1, "4. What's going on, Alice!");
+    
+      
         TimeUnit.SECONDS.sleep(1);
-        TimeUnit.SECONDS.sleep(1);
-        user4.sendMessage(user3, "Hey Deby, it's me Kevin!"); // this message is sent 2 seconds after
-        user3.save();
+        user4.sendMessage(user3, "5. Hey Deby, it's me Kevin!"); // this message is sent 2 seconds after
+    
 
         // Attempt to send a message after blocking
-        user2.sendMessage(user1, "THIS MESSAGE SHOULD BE GETTING BLOCKED AND SHOULD NOT BE SEEN");
+        user2.sendMessage(user1, "6. THIS MESSAGE SHOULD BE GETTING BLOCKED AND SHOULD NOT BE SEEN");
         System.out.println();
         for (User user : ChatServer.getInstance().getUserList()) {
 

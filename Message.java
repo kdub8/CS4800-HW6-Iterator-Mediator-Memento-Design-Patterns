@@ -5,14 +5,21 @@ public class Message {
     private User[] recipients;
     private Date timestamp;
     private String content;
+    private MessageMemento memento;
 
     public Message(User sender, User[] recipients, String content) {
         this.sender = sender;
         this.recipients = recipients;
         this.timestamp = new Date();
         this.content = content;
-
+        this.memento = new MessageMemento(this);
     }
+
+    public MessageMemento createMemento() {
+        return new MessageMemento(this);
+    }
+
+    
 
     public User getSender() {
         return this.sender;
