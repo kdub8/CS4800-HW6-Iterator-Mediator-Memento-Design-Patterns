@@ -20,33 +20,42 @@ public class ChatApplication {
         // Block user2 by user1
         user1.blockUser(user2);
 
-        user1.sendMessage(user2, "1. Hello, Bob!");
+        user1.sendMessage(user2, "1. Hello, Bob, it's me, Alice!");
 
         user1.sendMessage(user4, "2. UNDO THIS MESSAGE");
 
         // undo the last message from user1
         user1.undo();
         
-
-        user2.sendMessage(user1, "3. Hi, Alice!");
+        //bob sends to alice, but he got blocked by her
+        user2.sendMessage(user1, "3. Hi, Alice, Bob here!");
     
         
-        user3.sendMessage(user1, "4. What's going on, Alice!");
+        user3.sendMessage(user1, "4. What's going on, Alice! It's me, Deby!");
+        user3.sendMessage(user4, "5. What's going on, Kevin! It's me, Deby!");
+        user3.sendMessage(user4, "6. Do you mind if I go through your chat history?");
+        
     
       
         TimeUnit.SECONDS.sleep(1);
-        user4.sendMessage(user3, "5. Hey Deby, it's me Kevin!"); // this message is sent 2 seconds after
-    
+        user4.sendMessage(user3, "7. Hey Deby, it's me Kevin!"); // this message is sent 2 seconds after
+        user4.sendMessage(user3, "8. Hey Deby, you really should stop looking at my chat history!");
+        user4.sendMessage(user3, "9. I don't think it's okay for other users to be able to see my history!");
+        user4.sendMessage(user3, "10. Hey Deby, what kind of chat messaging app allows other people to see my history using my username!");
 
-        // Attempt to send a message after blocking
-        user2.sendMessage(user1, "6. THIS MESSAGE SHOULD BE GETTING BLOCKED AND SHOULD NOT BE SEEN");
+        // Bob attempts to send a message after Alice blocked him
+        user2.sendMessage(user1, "11. THIS MESSAGE SHOULD BE GETTING BLOCKED AND SHOULD NOT BE SEEN BECAUSE ALICE BLOCKED BOB.");
+
         System.out.println();
         for (User user : ChatServer.getInstance().getUserList()) {
-
-            System.out.println("Chat history for " + user.getUsername() + ":");
+            String allCapsUserName = user.getUsername().toUpperCase();
+            System.out.println("----------------------------------------");
+            System.out.println("CHAT HISTORY FOR " + allCapsUserName + ":");
 
             for (Message message : user.getChatHistory().getMessageList()) {
-                System.out.println(message.getSender().getUsername() + " -> " + message.getContent());
+                User[] recipients = message.getRecipients();
+                String recipient = recipients[0].getUsername();
+                System.out.println(message.getSender().getUsername() + " -> " + recipient + ": " + message.getContent());
                 System.out.println();
             }
 
@@ -59,6 +68,18 @@ public class ChatApplication {
         List<Message> msgList = user3.getChatHistory().getMessageList();
 
         for (Message msg : msgList) {
+            System.out.println("Timestamp: " + msg.getTimestamp());
+            System.out.println("Message content: " + msg.getContent());
+            System.out.println();
+        }
+
+        System.out.println();
+
+        System.out.println("----------------------Allowing User 3 to view the chat history for " + user4.getUsername()
+                + "-------------------------");
+        List<Message> userHistory = user3.getChatHistoryForUser(user4);
+
+        for (Message msg : userHistory) {
             System.out.println("Timestamp: " + msg.getTimestamp());
             System.out.println("Message content: " + msg.getContent());
             System.out.println();

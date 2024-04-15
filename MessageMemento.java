@@ -20,10 +20,7 @@ public class MessageMemento {
         Message lastMessage = sender.getChatHistory().getLastMessage();
         ChatHistory senderHistory = sender.getChatHistory();
         senderHistory.removeMessage(lastMessage);
-
-        lastMessage = recipient.getChatHistory().getLastMessage();
-        recipient.getChatHistory().removeMessage(lastMessage);
-
+        recipient.getChatHistory().removeMessage(message);
     }
 
     public Message getState() {
