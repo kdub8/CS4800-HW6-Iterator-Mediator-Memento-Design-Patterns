@@ -8,9 +8,6 @@ public class SearchMessagesByUser implements IterableByUser {
     public SearchMessagesByUser(User user) {
         this.user = user;
         this.messages = user.getChatHistoryForUser(user);
-        System.out.println("WEEWOO Searchmessagesbyuser object has been created!");
-        System.out.println("WEEWOO Searchmessagesbyuser object has been created!");
-        System.out.println("WEEWOO Searchmessagesbyuser object has been created!");
     }
 
 
