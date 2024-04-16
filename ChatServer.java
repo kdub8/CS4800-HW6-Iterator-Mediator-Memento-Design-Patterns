@@ -14,6 +14,7 @@ public class ChatServer {
         this.blockedUsers = new HashMap<>();
     }
 
+
     public List<User> getUserList() {
         return this.registeredUsers;
     }
@@ -39,19 +40,7 @@ public class ChatServer {
         }
     }
 
-//    public void blockUser(User blocker, User userToBlock) {
-//        if (registeredUsers.contains(blocker) && registeredUsers.contains(userToBlock)) {
-//            userToBlock.blockUser(blocker);
-//        }
-//        instance.blockedUsers.put(userToBlock, true);
-//    }
 
-//    public void unBlockUser(User blocker, User userToUnblock) {
-//        if (registeredUsers.contains(blocker) && registeredUsers.contains(userToUnblock)) {
-//            userToUnblock.unblockUser(blocker);
-//        }
-//        instance.blockedUsers.remove(userToUnblock);
-//    }
 
     public void blockUser(User blocker, User userToBlock) {
         if (!blockedUsers.containsKey(blocker)) {

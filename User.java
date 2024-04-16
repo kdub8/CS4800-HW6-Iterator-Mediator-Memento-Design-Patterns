@@ -16,24 +16,6 @@ public class User implements IterableByUser {
         this.blockedUsers = new HashMap<>();
     }
 
-//    public void sendMessage(User recipient, String messageContent) {
-//        if (!recipient.blockedUsers.containsKey(this)) {
-//            Message message = new Message(this, new User[] { recipient }, messageContent);
-//            ChatServer.getInstance().sendMessage(this, recipient, messageContent);
-//            // MessageMemento memento = new MessageMemento(message);
-//            // memento.setState(message);
-//            // lastSentMessage = message;
-//            // lastMessageMemento = message.createMemento();
-//            chatHistory.addMessage(message);
-//            // recipient.chatHistory.addMessage(message);
-//
-//        } else {
-//            System.out.println(recipient.getUsername() + " cannot receive any messages from " + this.username
-//                    + " because " + this.username + " has been blocked by " + recipient.getUsername() + ".");
-//        }
-//
-//    }
-
     public void sendMessage(User recipient, String messageContent) {
         if (!ChatServer.getInstance().getBlockedUsers().containsKey(this)) {
             Message message = new Message(this, new User[] { recipient }, messageContent);
@@ -46,33 +28,20 @@ public class User implements IterableByUser {
 
     }
 
-    ///////////////////////////
-    // working undo method without memento pattern, still working on it though
     public void undo() {
-
         Message lastMessage = this.chatHistory.getLastMessage();
         MessageMemento memento = new MessageMemento(lastMessage);
         chatHistory.removeLastMessage();
         System.out.println("Message undone: " + memento.getContent());
-        //if it doesn't work then uncomment this below
-        //memento.getState().getSender().getChatHistory().addMessage(memento.getState());
 
-//        for (User recipient : lastMessage.getRecipients()) {
-//            lastMessage = recipient.chatHistory.getLastMessage();
-//            MessageMemento memento = new MessageMemento(lastMessage);
-//            memento.restoreFromMemento(this, recipient, lastMessage);
-//        }
-        
     }
 
     public void blockUser(User userToBlock) {
-        //this.blockedUsers.put(userToBlock, true);
         ChatServer.getInstance().blockUser(this, userToBlock);
 
     }
 
     public void unblockUser(User userToUnblock) {
-        //blockedUsers.remove(userToUnblock);
         ChatServer.getInstance().unblockUser(this, userToUnblock);
     }
 

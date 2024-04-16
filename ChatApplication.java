@@ -1,4 +1,4 @@
-import java.util.Arrays;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -90,7 +90,6 @@ public class ChatApplication {
         ////////////////////////////////////////////////////////////////////////
         System.out.println("------------------------TESTING ITERATORS------------------------");
 
-        //ChatHistory chatHistory = new ChatHistory();
         // Demonstrate iterator for User's chat history
         System.out.println("Iterating over User 1's chat history:");
         Iterator<Message> userIterator = user1.iterator(user1);
@@ -115,6 +114,35 @@ public class ChatApplication {
                     recipient + ": " +
                     message.getContent());
         }
+
+        System.out.println("----------------------SearchMessagesByUser-------------------------");
+
+        // Search for messages for User 3
+        //ChatHistory chatHistory3 = user3.getChatHistory();
+        System.out.println("Before creating SearchMessagesByUser");
+        SearchMessagesByUser searchMessagesByUser3 = new SearchMessagesByUser(user3);
+        System.out.println("After creating SearchMessagesByUser");
+        Iterator<Message> user3Iterator = searchMessagesByUser3.iterator(user3);
+        while (user3Iterator.hasNext()) {
+            Message message = user3Iterator.next();
+            User[] recipients = message.getRecipients();
+            String recipient = recipients[0].getUsername();
+            System.out.println(message.getSender().getUsername() + " -> " +
+                    recipient + ": " +
+                    message.getContent());
+        }
+
+//        // Search for messages for User 4
+//        SearchMessagesByUser searchMessagesByUser4 = new SearchMessagesByUser(user4);
+//        Iterator<Message> user4Iterator = searchMessagesByUser4.iterator(user4);
+//        while (user4Iterator.hasNext()) {
+//            Message message = user4Iterator.next();
+//            User[] recipients = message.getRecipients();
+//            String recipient = recipients[0].getUsername();
+//            System.out.println(message.getSender().getUsername() + " -> " +
+//                    recipient + ": " +
+//                    message.getContent());
+//        }
 
     }
 }

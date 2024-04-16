@@ -34,14 +34,6 @@ public class MessageMemento {
 
 
 
-    // public MessageMemento getState() {
-    // return this;
-    // }
-
-    // public void setState(Message message) {
-    // this.timestamp = message.getTimestamp();
-    // this.content = message.getContent();
-    // }
 
     public String getContent() {
         return this.content;
