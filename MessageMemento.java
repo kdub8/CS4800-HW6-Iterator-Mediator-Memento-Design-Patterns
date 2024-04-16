@@ -1,12 +1,12 @@
 
 import java.util.Date;
-
+// Memento class to store the state of a Message
 public class MessageMemento {
     private Date timestamp;
     private String content;
     private Message message;
     private String state;
-
+    // Constructor to create a memento from a Message object
     public MessageMemento(Message message) {
         this.timestamp = message.getTimestamp();
         this.content = message.getContent();
@@ -31,9 +31,6 @@ public class MessageMemento {
     public void setState(Message message) {
         this.message = message;
     }
-
-
-
 
     public String getContent() {
         return this.content;

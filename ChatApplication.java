@@ -132,17 +132,7 @@ public class ChatApplication {
                     message.getContent());
         }
 
-//        // Search for messages for User 4
-//        SearchMessagesByUser searchMessagesByUser4 = new SearchMessagesByUser(user4);
-//        Iterator<Message> user4Iterator = searchMessagesByUser4.iterator(user4);
-//        while (user4Iterator.hasNext()) {
-//            Message message = user4Iterator.next();
-//            User[] recipients = message.getRecipients();
-//            String recipient = recipients[0].getUsername();
-//            System.out.println(message.getSender().getUsername() + " -> " +
-//                    recipient + ": " +
-//                    message.getContent());
-//        }
+
 
     }
 }

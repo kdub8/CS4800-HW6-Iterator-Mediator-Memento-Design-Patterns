@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,7 +7,9 @@ public class SearchMessagesByUser implements IterableByUser {
     private  User user;
     public SearchMessagesByUser(User user) {
         this.user = user;
-        this.messages = new ArrayList<>();
+        this.messages = user.getChatHistoryForUser(user);
+        System.out.println("WEEWOO Searchmessagesbyuser object has been created!");
+        System.out.println("WEEWOO Searchmessagesbyuser object has been created!");
         System.out.println("WEEWOO Searchmessagesbyuser object has been created!");
     }
 
